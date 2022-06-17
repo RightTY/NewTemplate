@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule,HttpClient } from '@angular/common/http';
-import { JwtModule } from '@auth0/angular-jwt';
+import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { HttpLoaderFactory } from '../../service/languageTranslate/language-translate.service';
+import { jwtOptionsFactory, JwtService } from 'src/service/jwt/jwt.service';
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
 
 @NgModule({
   declarations: [],
@@ -22,14 +20,16 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }}),
       JwtModule.forRoot({
-        config: {
-          tokenGetter: function  tokenGetter() {
-               return    localStorage.getItem('access_token');}
+        jwtOptionsProvider:{
+          provide:JWT_OPTIONS,
+          useFactory:jwtOptionsFactory,
+          deps:[JwtService]
         }
       })
   ],
   exports:[
-    TranslateModule
+    TranslateModule,
+    JwtModule
   ]
 })
 export class SharedModule { }
