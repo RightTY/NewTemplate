@@ -1,3 +1,6 @@
 {
-    "test":"test"
+    "test":"test",
+    "enterpriseRegister":"公司註冊",
+    "userRegister":"使用者註冊",
+    "language":"繁體中文"
 }

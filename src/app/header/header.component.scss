@@ -1,0 +1,216 @@
+@mixin pad{
+    @media(max-width:960px){
+        @content;
+    }
+}
+
+::ng-deep .p-menubar{
+    border: 0;
+    background-color: inherit;
+}
+
+.header{
+    background: linear-gradient(90deg, #460582 0%, #7f53cf 100%) !important;
+}
+
+::ng-deep .p-menubar {
+    .p-menubar-button{
+        color: rgb(255, 255, 255);
+        &:hover{
+            background: none;
+            color:rgba(255,255,255,.75);
+        }
+        &:focus{
+            box-shadow: none;
+        }
+    }
+    .p-menubar-root-list {
+        padding: 0;
+
+        .p-menuitem {
+            .p-menuitem-link {
+                @include pad{
+                    background: linear-gradient(90deg, #460582 0%, #7f53cf 100%) !important;
+                    &:focus{
+                        box-shadow: none;
+                    }
+                }
+        
+                .p-menuitem-text{
+                    color: rgb(255, 255, 255);
+                }
+        
+                .p-menuitem-icon{
+                    color: rgb(255, 255, 255);
+                }
+
+                .p-submenu-icon{
+                    color: rgb(255, 255, 255);
+                    @include pad{
+                        margin-left: inherit;
+                    }
+                }
+
+                &:not(.p-disabled):hover {
+                    background-color: inherit;
+                    .p-menuitem-text {
+                        color:rgba(255,255,255,.75);
+                    }
+                    .p-menuitem-icon {
+                        color:rgba(255,255,255,.75);
+                    }
+                    .p-submenu-icon{
+                        color:rgba(255,255,255,.75);
+                    }
+                }
+            }
+        
+        }
+        .p-menuitem-active{
+            .p-submenu-list{
+                padding: 0;
+            }
+        }
+        .p-menuitem.p-menuitem-active{
+            // .p-menuitem-link 
+            // {
+            //     @include pad{
+            //         .p-menuitem-text{
+            //             color:red;
+            //         }
+            //         .p-menuitem-icon{
+            //             color: rgb(255, 255, 255);
+            //         }
+            //         .p-submenu-icon{
+            //             color: rgb(255, 255, 255);
+            //         }
+            //     }
+            // }
+            .p-submenu-list{
+                .p-menuitem{
+                    .p-menuitem-link{
+                        &:hover{
+                            background-color: rgb(240, 248, 255);
+                            .p-menuitem-text{
+                                color: rgb(0, 0, 0);
+                            }
+                            .p-menuitem-icon{
+                                color: rgb(0, 0, 0);
+                            }
+                            .p-submenu-icon{
+                                color: rgb(0, 0, 0);
+                            }
+                            @include pad{
+                                .p-menuitem-text{
+                                    color:rgba(255,255,255,.75);
+                                }
+                                .p-menuitem-icon{
+                                    color:rgba(255,255,255,.75);
+                                }
+                                .p-submenu-icon{
+                                    color:rgba(255,255,255,.75);
+                                }
+                            }
+                        }
+                        .p-menuitem-text{
+                            color: rgb(0, 0, 0);
+                        }
+                        .p-menuitem-icon{
+                            color: rgb(0, 0, 0);
+                        }
+                        .p-submenu-icon{
+                            color: rgb(0, 0, 0);
+                        }
+                        @include pad{
+                            .p-menuitem-text{
+                                color:rgb(255, 255, 255);
+                            }
+                            .p-menuitem-icon{
+                                color: rgb(255, 255, 255);
+                            }
+                            .p-submenu-icon{
+                                color: rgb(255, 255, 255);
+                            }
+                        }
+                    }
+                }
+            }
+            .p-menubar .p-menubar-root-list{
+                .p-menuitem.p-menuitem-active{
+                    .p-menuitem-link{
+                        &:not(.p-disabled){
+                            &:hover{
+                                background: #331044;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // .p-menubarsub{
+    //     .p-menubar-root-list{
+    //         .p-menuitem.p-menuitem-active{
+    //             .p-element{
+    //                 .p-submenu-list{
+    //                     .p-menuitem.p-menuitem-active{
+    //                         .p-menuitem-link{
+    //                             .p-menuitem-text{
+    //                                 color: red;
+    //                             }
+                        
+    //                             .p-menuitem-icon{
+    //                                 color: rgb(0, 0, 0);
+    //                             }
+                
+    //                             .p-submenu-icon{
+    //                                 color: rgb(0, 0, 0);
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+}
+
+
+::ng-deep .p-menubar .p-menubar-root-list {
+    .p-menuitem.p-menuitem-active {
+        .p-menuitem-link{
+            background: inherit;
+            &:not(.p-disabled){
+                &:hover{
+                    background: inherit;
+                        .p-menuitem-text{
+                            color:rgba(255,255,255,.75);
+                        }
+                        .p-menuitem-icon{
+                            color:rgba(255,255,255,.75);
+                        }
+                        .p-submenu-icon{
+                            color:rgba(255,255,255,.75);
+                        }
+                    
+                } 
+            }
+        }
+        .p-menuitem-link .p-menuitem-text{
+            color: rgb(255, 255, 255);            
+        }
+        .p-menuitem-link .p-menuitem-icon{
+            color: rgb(255, 255, 255);
+        }
+        .p-menuitem-link .p-submenu-icon{
+            color: rgb(255, 255, 255);
+        }
+    }
+    .p-menuitem{
+        .p-menuitem-link{
+            &:focus{
+                box-shadow:none;
+            }
+        }
+    }
+}

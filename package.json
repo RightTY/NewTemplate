@@ -10,8 +10,8 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~13.3.0",
     "@Angular/cli": "npm:@angular/cli@~13.3.8",
+    "@angular/animations": "~13.3.0",
     "@angular/common": "~13.3.0",
     "@angular/compiler": "~13.3.0",
     "@angular/core": "~13.3.0",
@@ -27,6 +27,7 @@
     "primeng": "^13.4.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
+    "typescript-linq": "^1.0.6",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

@@ -12,13 +12,6 @@ import { jwtOptionsFactory, JwtService } from 'src/service/jwt/jwt.service';
   imports: [
     CommonModule,
     HttpClientModule,
-    TranslateModule.forRoot({
-      defaultLanguage:"zh-tw",
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (HttpLoaderFactory),
-        deps: [HttpClient]
-      }}),
       JwtModule.forRoot({
         jwtOptionsProvider:{
           provide:JWT_OPTIONS,
