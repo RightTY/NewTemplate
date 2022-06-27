@@ -4,6 +4,13 @@
     }
 }
 
+@mixin texthover{
+    color: rgb(255, 255, 255);
+    &:hover{
+        color:rgba(255,255,255,.75);
+    }
+}
+
 ::ng-deep .p-menubar{
     border: 0;
     background-color: inherit;
@@ -213,4 +220,27 @@
             }
         }
     }
+}
+
+::ng-deep .p-ripple.p-element.p-tree-toggler.p-link{
+    display: none;
+}
+
+::ng-deep .p-treeselect:not(.p-disabled):hover{
+    border: 0;
+} 
+
+::ng-deep .p-treeselect:not(.p-disabled).p-focus{
+    box-shadow: none;
+}
+::ng-deep .p-inputwrapper{
+    background: inherit;
+    border: 0;
+}
+::ng-deep .p-treeselect-label{
+    @include texthover;
+}
+
+::ng-deep .p-treeselect-trigger-icon{
+    @include texthover;
 }

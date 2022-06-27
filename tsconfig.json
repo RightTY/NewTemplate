@@ -2,13 +2,10 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    //"allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
@@ -17,10 +14,10 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2017",
+    "target": "es5",//配合需要支援IE，而IE11只支援到es5
     "module": "es2020",
     "lib": [
-      "es2020",
+      "es2018",
       "dom"
     ]
   },

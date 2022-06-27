@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SharedModule } from 'src/module/shared/shared.module';
 
 
 @Injectable({

@@ -3,8 +3,12 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from 'src/app/header/header.component';
 import { MenubarModule } from 'primeng/menubar';
 import { TabViewModule } from 'primeng/tabview';
+import { TreeSelectModule } from 'primeng/treeselect';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../module/shared/shared.module';
-
+import { ButtonModule } from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
 
 
 @NgModule({
@@ -13,9 +17,14 @@ import { SharedModule } from '../../module/shared/shared.module';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     MenubarModule,
     TabViewModule,
-    SharedModule,
+    TreeSelectModule,
+    FormsModule,
+    PanelModule,
+    ButtonModule,
+    BrowserAnimationsModule
   ],
   exports:[
     HeaderComponent

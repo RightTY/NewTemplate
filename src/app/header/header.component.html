@@ -1,8 +1,11 @@
 <div class="grid align-items-center justify-content-center header">
-    <p-menubar [model]="items" class="col-12">
+    <p-menubar [model]="headerBarItems" class="col-12">
         <ng-template pTemplate="start">
             <img src="../../assets/icon/main_logo.png" height="40" class="mr-2">
         </ng-template>
+
+        <ng-template pTemplate="end">
+            <p-treeSelect [(ngModel)]="chooseLang" [options]="languageTranslateItems" (ngModelChange)="ChangeLang($event)"></p-treeSelect>
+        </ng-template>
     </p-menubar>
 </div>
-<p>{{ "test" | translate}}</p>
