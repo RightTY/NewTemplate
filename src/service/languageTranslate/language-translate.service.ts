@@ -50,7 +50,7 @@ export function appInitializerFactory(translate: TranslateService) {
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
 }
 // export function HeaderTranslateLoader(http: HttpClient) {
 //   return new TranslateHttpLoader(http, './assets/i18n/header', '.json');

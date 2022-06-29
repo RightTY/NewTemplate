@@ -1,7 +1,7 @@
-import { LoginModel } from "src/model/LoginModel";
+import { LoginModel } from 'src/model/LoginModel';
 
 export interface Iuser {
-    // label: string;
-    Login: (loginModel :LoginModel)=>void;
-    // Logout: ()=>String;
+  // label: string;
+  Login: (loginModel: LoginModel,langType :string) => void;
+  // Logout: ()=>String;
 }

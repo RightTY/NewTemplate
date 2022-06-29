@@ -1,27 +1,32 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class JwtService {
-  public tokenType!: String;
-  constructor(private httpClient: HttpClient) { }
+  constructor() {}
 }
 
-export function jwtOptionsFactory(jwtService :JwtService){
+export function jwtOptionsFactory(request: Request) {
   return {
-    tokenGetter: () => {
-      switch (jwtService.tokenType) {
-        case "ap":
-          return  localStorage.getItem("ap_token");
-        case "template":
-          return  localStorage.getItem("template_token");
-        default:
-          return  "";
+    tokenGetter: (request: Request) => {
+      console.log(request.url);
+      if (
+        request.url.includes('api') &&
+        !request.url.includes('/api/public/Token/create_ap_token')
+      ) {
+        return localStorage.getItem('ap_token');
+      } else {
+        return localStorage.getItem('template_token');
       }
-    }
-  }
+    },
+    allowedDomains: [''],
+    disallowedRoutes: [
+      '/assets/i18n/zh-tw.json',
+      '/assets/i18n/zh-cn.json',
+      '/api/public/Token/create_ap_token',
+    ],
+    authScheme: 'bearer',
+    throwNoTokenError: true,
+  };
 }

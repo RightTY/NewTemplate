@@ -48,7 +48,6 @@ export class HeaderComponent implements OnInit {
 
   ChangeLang(chooseLang:TreeNodeModel){
     this.translate.use(chooseLang.data).subscribe(()=>{
-      console.log(this.translate.currentLang)
       this.ChangeHeaderBarItems();
     });
   }
@@ -59,6 +58,5 @@ export class HeaderComponent implements OnInit {
       new MenuItemModel(this.translate.instant('enterpriseRegister')),
       new MenuItemModel(this.translate.instant('userRegister'))
     );
-    console.log(this.headerBarItems)
   }
 }

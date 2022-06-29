@@ -1,52 +1,117 @@
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpEvent,
+  HttpEventType,
+  HttpHeaders,
+  HttpResponse,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { sha256 } from 'js-sha256';
 import { Iuser } from 'src/interface/Iuser';
+import { DeviceModel } from 'src/model/DeviceModel';
 import { LoginModel } from 'src/model/LoginModel';
+import { lastValueFrom, Observable, of, tap } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService implements Iuser {
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService
+  ) {}
 
-  constructor() { }
-  Login(loginModel :LoginModel){
-    let loginTimeStamp = Math.floor(new Date().getTime()/1000).toString();
-    let hashStringArr:string[] =[
-      loginModel.corpNo,loginModel.bizType,loginModel.account,loginTimeStamp,loginModel.password
-    ] 
+  Login(
+    loginModel: LoginModel,
+    langType: string
+  ) : Observable<CreateApTokenResponse>{
+    let loginTimeStamp = Math.floor(new Date().getTime() / 1000).toString();
+    let hashStringArr: string[] = [
+      loginModel.corpNo,
+      loginModel.bizType,
+      loginModel.account,
+      loginTimeStamp,
+      loginModel.password,
+    ];
+
     let hash = sha256(this.hashStringJoin(hashStringArr));
-    console.log(this.hashStringJoin(hashStringArr));
-		let expire = new Date();
-		expire.setSeconds(expire.getSeconds() + 43200);
-    console.log(navigator)
+    let expire = new Date();
+    expire.setSeconds(expire.getSeconds() + 43200);
+    let browser = new DeviceModel();
+    let createApTokenRequest: CreateApTokenRequest = {
+      corpno: loginModel.corpNo,
+      biztype: loginModel.bizType,
+      userid: loginModel.account,
+      password: loginModel.password,
+      logintime: loginTimeStamp,
+      isweb: browser.IsWeb,
+      expire: '43200',
+    };
+
+    let headers = new HttpHeaders({
+      'Accept-Language': langType,
+      Authorization: 'basic ' + hash,
+    });
+
+    return this.http
+      .post<CreateApTokenResponse>(
+        '/api/public/Token/create_ap_token',
+        createApTokenRequest,
+        {
+          headers: headers,
+          observe: 'body'
+        }
+      )
+      .pipe(
+        catchError(this.handleError<CreateApTokenResponse>('test'))
+      );
   }
 
-
-  hashStringJoin(arr : string[]):string{
-    return arr.join(":"); 
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: HttpErrorResponse): Observable<T> => {
+      this.log(`${operation} failed: ${error.error.desc}`);
+      return of(error.error as T);
+    };
   }
 
-  IsWeb(){
-    var browser={
-			versions:function(){ 
-				var u = navigator.userAgent;
-				return {//移動終端瀏覽器版本信息
-					//trident: u.indexOf('Trident') > -1, //IE內核
-					presto: u.indexOf('Presto') > -1, //opera內核
-					webKit: u.indexOf('AppleWebKit') > -1, //蘋果、谷歌內核
-					gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐內核
-					mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否為移動終端
-					ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios終端
-					android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android終端或者uc瀏覽器
-					iPhone: u.indexOf('iPhone') > -1 , //是否為iPhone或者QQHD瀏覽器
-					iPad: u.indexOf('iPad') > -1, //是否iPad
-					webApp: u.indexOf('Safari') == -1, //是否web應該進程，沒有頭部與底部
-					weixin: u.indexOf('MicroMessenger') > -1, //是否微信
-					qq: u.match(/\sQQ/i)?.toString() == " qq" //是否QQ
-				};
-			}(),
-			// language:(navigator.browserLanguage || navigator.language).toLowerCase()
-		};
-    return browser;
+  private log(message: string) {
+    this.messageService.add({
+      detail: message,
+      severity: 'error',
+    });
+  }
+
+  hashStringJoin(arr: string[]): string {
+    return arr.join(':');
   }
 }
+
+class CreateApTokenRequest {
+  public corpno: string = '';
+  public biztype: string = '';
+  public userid: string = '';
+  public password: string = '';
+  public logintime: string = '';
+  public isweb: boolean = false;
+  public expire: string = '';
+}
+
+export class CreateApTokenResponse {
+  public result: boolean = false;
+  public message: string = '';
+  public desc: string = '';
+  public code: number = 400;
+  public token: TokenData = new TokenData();
+}
+
+class TokenData {
+  public Access: string = '';
+  public AccessExpires: string = '';
+}
+function reruen(arg0: HttpResponse<CreateApTokenResponse>) {
+  throw new Error('Function not implemented.');
+}
+

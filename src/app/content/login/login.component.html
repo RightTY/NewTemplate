@@ -1,36 +1,74 @@
+<p-toast position="top-right"></p-toast>
 <p-card>
-    <ng-template pTemplate="header">
-        {{'indexEnterTitle'|translate}}
-    </ng-template>
+  <ng-template pTemplate="header">
+    {{ "indexEnterTitle" | translate }}
+  </ng-template>
 
-    <form [formGroup]="loginForm" >
+  <form [formGroup]="loginForm">
+    <div class="field">
+      <p>{{ "account" | translate }}</p>
+      <input
+        type="text"
+        formControlName="account"
+        [placeholder]="'accountHolder' | translate"
+        pInputText
+      />
+    </div>
+    <div class="field">
+      <div
+        class="flex justify-content-between flex-wrap align-items-center card-container purple-container"
+      >
+        <p>{{ "password" | translate }}</p>
+        <p-button
+          class="align-items-center"
+          [icon]="chooseSetting ? 'pi pi-minus' : 'pi pi-plus'"
+          styleClass="p-button-text"
+          [label]="'forgotPw' | translate"
+        ></p-button>
+      </div>
+      <p-password
+        formControlName="password"
+        [placeholder]="'pwHolder' | translate"
+        [feedback]="false"
+      ></p-password>
+    </div>
+    <p-accordion>
+      <p-accordionTab [(selected)]="chooseSetting">
         <div class="field">
-            <p>{{ "account" | translate}}</p>
-            <input type="text"  formControlName="account"  [placeholder]="'accountHolder' | translate" pInputText>
+          <p>{{ "corpNo" | translate }}</p>
+          <input
+            type="text"
+            formControlName="corpNo"
+            [placeholder]="'corpHolder' | translate"
+            pInputText
+          />
         </div>
         <div class="field">
-            <div class="flex justify-content-between flex-wrap align-items-center card-container purple-container">
-                <p >{{ "password" | translate}}</p>
-                <p-button class="align-items-center" [icon]="chooseSetting ? 'pi pi-minus' : 'pi pi-plus'" styleClass="p-button-text" [label]="'forgotPw'|translate"></p-button>
-            </div>
-            <p-password formControlName="password"   [placeholder]="'pwHolder' | translate" [feedback]="false" ></p-password>
+          <p>{{ "bizType" | translate }}</p>
+          <input
+            type="text"
+            formControlName="bizType"
+            [placeholder]="'bizHolder' | translate"
+            pInputText
+          />
         </div>
-        <p-accordion> 
-            <p-accordionTab [(selected)]="chooseSetting">
-                <div class="field">
-                    <p>{{ "corpNo" | translate}}</p>
-                    <input type="text" formControlName="corpNo"  [placeholder]="'corpHolder' | translate" pInputText>
-                </div>
-                <div class="field">
-                    <p>{{ "bizType" | translate}}</p>
-                    <input type="text" formControlName="bizType"  [placeholder]="'bizHolder' | translate" pInputText>
-                </div>
-            </p-accordionTab>
-        </p-accordion>
-        <div class="flex justify-content-between flex-wrap card-container purple-container">
-            <p-button [style.visibility]="settingDisplay()" (click)="toggle()" styleClass="p-button-text" [label]="'setting'|translate"></p-button>
-            <p-button (click)="test()"  styleClass="login" class="p-button-sm flex align-items-center" [label]="'login'|translate"></p-button>
-        </div>
-    </form>
+      </p-accordionTab>
+    </p-accordion>
+    <div
+      class="flex justify-content-between flex-wrap card-container purple-container"
+    >
+      <p-button
+        [style.visibility]="settingDisplay()"
+        (click)="toggle()"
+        styleClass="p-button-text"
+        [label]="'setting' | translate"
+      ></p-button>
+      <p-button
+        (click)="test()"
+        styleClass="login"
+        class="p-button-sm flex align-items-center"
+        [label]="'login' | translate"
+      ></p-button>
+    </div>
+  </form>
 </p-card>
-<p>{{ttt | json}}</p>

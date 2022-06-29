@@ -1,7 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
-    "analytics": "81c5eafa-d0ae-4f77-853c-9095ac99b874"
+    "analytics": "81c5eafa-d0ae-4f77-853c-9095ac99b874",
+    "defaultCollection": "@angular-eslint/schematics"
   },
   "version": 1,
   "newProjectRoot": "projects",
@@ -82,7 +83,8 @@
               "browserTarget": "NewTemplate:build:production"
             },
             "development": {
-              "browserTarget": "NewTemplate:build:development"
+              "browserTarget": "NewTemplate:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
@@ -109,6 +111,15 @@
               "src/styles.scss"
             ],
             "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }

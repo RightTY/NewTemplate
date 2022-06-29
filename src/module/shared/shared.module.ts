@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { jwtOptionsFactory, JwtService } from 'src/service/jwt/jwt.service';
-
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [],
@@ -12,16 +11,13 @@ import { jwtOptionsFactory, JwtService } from 'src/service/jwt/jwt.service';
     CommonModule,
     HttpClientModule,
     JwtModule.forRoot({
-       jwtOptionsProvider:{
-         provide:JWT_OPTIONS,
-         useFactory:jwtOptionsFactory,
-         deps:[JwtService]
-       }
-     })
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory: jwtOptionsFactory,
+        deps: [JwtService],
+      },
+    }),
   ],
-  exports:[
-    TranslateModule,
-    JwtModule
-  ]
+  exports: [JwtModule, InputTextModule],
 })
-export class SharedModule { }
+export class SharedModule {}
