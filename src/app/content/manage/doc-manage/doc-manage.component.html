@@ -1,0 +1,219 @@
+<p-card>
+  <div class="field grid col-12">
+    <p-treeSelect
+      [(ngModel)]="ChooseDateRange"
+      [options]="DateRangeList"
+      [ngModelOptions]="{ standalone: true }"
+      (ngModelChange)="ChangeDateRange($event)"
+      class="md:col-2"
+    ></p-treeSelect>
+    <div class="p-inputgroup md:col-4">
+      <span class="p-inputgroup-addon">姓名</span>
+      <input
+        type="text"
+        pInputText
+        class="text-base text-color p-2 border-1 border-solid surface-border appearance-none outline-none focus:border-primary"
+        style="width: 80%"
+      />
+    </div>
+    <div class="p-inputgroup md:col-3">
+      <span class="p-inputgroup-addon">病歷號</span>
+      <input
+        type="text"
+        pInputText
+        class="text-base text-color p-2 border-1 border-solid surface-border appearance-none outline-none focus:border-primary"
+        style="width: 60%"
+      />
+    </div>
+    <div class="p-inputgroup md:col-3">
+      <span class="p-inputgroup-addon">身分證號</span>
+      <input
+        type="text"
+        pInputText
+        class="text-base text-color p-2 border-1 border-solid surface-border appearance-none outline-none focus:border-primary"
+        style="width: 60%"
+      />
+    </div>
+    <div class="p-inputgroup md:col-4">
+      <span class="p-inputgroup-addon">{{ "docName" | translate }}</span>
+      <input
+        type="text"
+        pInputText
+        class="text-base text-color p-2 border-1 border-solid surface-border appearance-none outline-none focus:border-primary"
+        style="width: 80%"
+      />
+    </div>
+    <div class="p-inputgroup md:col-3">
+      <span class="p-inputgroup-addon">{{ "searchMethod" | translate }}</span>
+      <input
+        type="text"
+        pInputText
+        class="text-base text-color p-2 border-1 border-solid surface-border appearance-none outline-none focus:border-primary"
+        style="width: 60%"
+      />
+    </div>
+    <div class="p-inputgroup md:col-3">
+      <span class="p-inputgroup-addon">
+        <p-checkbox
+          name="groupname"
+          value="val1"
+          [(ngModel)]="selectedValues"
+        ></p-checkbox>
+      </span>
+      <input
+        type="text"
+        pInputText
+        class="text-base text-color p-2 border-1 border-solid surface-border outline-none"
+        [value]="'signedMark' | translate"
+        readonly
+      />
+    </div>
+    <div class="p-inputgroup md:col-3">
+      <span class="p-inputgroup-addon">
+        <p-checkbox
+          name="groupname"
+          value="val1"
+          [(ngModel)]="selectedValues"
+        ></p-checkbox>
+      </span>
+      <input
+        type="text"
+        pInputText
+        class="text-base text-color p-2 border-1 border-solid surface-border outline-none"
+        [value]="'unsignedMark' | translate"
+        readonly
+      />
+    </div>
+    <div class="p-inputgroup md:col-3">
+      <span class="p-inputgroup-addon">
+        <p-checkbox
+          name="groupname"
+          value="val1"
+          [(ngModel)]="selectedValues"
+        ></p-checkbox>
+      </span>
+      <input
+        type="text"
+        pInputText
+        class="text-base text-color p-2 border-1 border-solid surface-border outline-none"
+        [value]="'queryDeleteDocTitle' | translate"
+        readonly
+      />
+    </div>
+    <div class="md:col-3">
+      <p-button
+        (click)="QueryDoc()"
+        class="p-button-sm flex align-items-center"
+        [label]="'inquire' | translate"
+      ></p-button>
+    </div>
+  </div>
+</p-card>
+<p-card>
+  <div class="card flex-wrap templateList">
+    <p-table
+      #dt
+      styleClass="p-datatable-sm"
+      [value]="DocList"
+      [scrollable]="true"
+      scrollHeight="47vh"
+      [paginator]="true"
+      [rows]="5"
+      responsiveLayout="scroll"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      scrollDirection="both"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [(selection)]="SelectedDocs"
+      dataKey="jobinfo"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <td>
+            <div class="grid col-12">
+              <div class="field-checkbox m-2">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                <label for="AllDoc">{{ "queryAllDocTitle" | translate }}</label>
+              </div>
+              <p-splitButton
+                #bp
+                [label]="'batchprocess' | translate"
+                [model]="BatchHandle"
+                (onClick)="bp.onDropdownButtonClick($event)"
+                styleClass="p-button-text p-button-link m-2"
+              ></p-splitButton>
+              <p-splitButton
+                #cs
+                [label]="'changeStatus' | translate"
+                [model]="DocStates"
+                (onClick)="cs.onDropdownButtonClick($event)"
+                styleClass="p-button-text p-button-link m-2"
+              ></p-splitButton>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-Doc>
+        <tr>
+          <td style="justify-content: center; flex-basis: 10%">
+            <p-tableCheckbox [value]="Doc"></p-tableCheckbox>
+          </td>
+          <td style="justify-content: flex-start; flex-basis: 50%">
+            <div>
+              <a>
+                {{ Doc.jobinfo.TEMP_NAME }}
+              </a>
+              <p
+                *ngIf="Doc.jobinfo.JOB_STATUS === 'CANCEL'"
+                style="color: #a8a2a2; font-size: 14px;margin: 0;"
+              >
+                {{ "cancelSignature" | translate }}
+              </p>
+            </div>
+          </td>
+          <td style="flex-basis: 15%">
+            {{ Doc.jobinfo.CREATE_TIME }}
+          </td>
+          <td style="flex-basis: 10%">
+            <p-splitButton
+              #ap
+              [label]="'more' | translate"
+              [model]="DocExtra"
+              (onClick)="ap.onDropdownButtonClick($event)"
+              (onDropdownClick)="SetRadioDoc(Doc)"
+              styleClass="p-button-text p-button-link"
+              class="p-button-link after"
+            ></p-splitButton>
+            <button pButton type="button" icon="pi pi-print"></button>
+          </td>
+          <td style="flex-basis: 15%">
+            <div class="signers">
+              <div *ngFor="let singer of this.Doc.jobsignhists">
+                <p>
+                  <span>{{ singer.SIGNER_NAME }}</span>
+                  <span
+                    *ngIf="
+                      singer.SIGN_STATUS === 'Signature Complete';
+                      else elseSignStatus
+                    "
+                    style="color: #008000"
+                    >已簽名</span
+                  >
+                </p>
+              </div>
+              <ng-template #elseSignStatus>
+                <span style="color: #ff0000">未簽名</span>
+              </ng-template>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td style="justify-content: center; width: 100%">No records found</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</p-card>
+<p-confirmDialog></p-confirmDialog>

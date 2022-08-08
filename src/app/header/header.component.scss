@@ -11,7 +11,7 @@
   }
 }
 
-::ng-deep .p-menubar {
+:host ::ng-deep .p-menubar {
   border: 0;
   background-color: inherit;
 }
@@ -20,7 +20,7 @@
   background: linear-gradient(90deg, #460582 0%, #7f53cf 100%) !important;
 }
 
-::ng-deep .p-menubar {
+:host ::ng-deep .p-menubar {
   .p-menubar-button {
     color: rgb(255, 255, 255);
     &:hover {
@@ -185,7 +185,7 @@
   // }
 }
 
-::ng-deep .p-menubar .p-menubar-root-list {
+:host ::ng-deep .p-menubar .p-menubar-root-list {
   .p-menuitem.p-menuitem-active {
     .p-menuitem-link {
       background: inherit;
@@ -223,25 +223,27 @@
   }
 }
 
-::ng-deep .p-ripple.p-element.p-tree-toggler.p-link {
+:host ::ng-deep .p-ripple.p-element.p-tree-toggler.p-link {
   display: none;
 }
 
-::ng-deep .p-treeselect:not(.p-disabled):hover {
+:host ::ng-deep .p-treeselect:not(.p-disabled):hover {
   border: 0;
 }
 
-::ng-deep .p-treeselect:not(.p-disabled).p-focus {
+:host ::ng-deep .p-treeselect:not(.p-disabled).p-focus {
   box-shadow: none;
 }
-::ng-deep .p-inputwrapper {
+
+:host ::ng-deep .p-inputwrapper {
   background: inherit;
   border: 0;
 }
-::ng-deep .p-treeselect-label {
+
+:host ::ng-deep .p-treeselect-label {
   @include texthover;
 }
 
-::ng-deep .p-treeselect-trigger-icon {
+:host ::ng-deep .p-treeselect-trigger-icon {
   @include texthover;
 }

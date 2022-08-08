@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginModel } from 'src/model/LoginModel';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { MessageService } from 'primeng/api';
-import {
-  CreateApTokenResponse,
-  LoginService,
-} from 'src/service/login/login.service';
 import { LanguageTranslateService } from 'src/service/languageTranslate/language-translate.service';
+import { Router } from '@angular/router';
+import { HeaderBarService } from 'src/service/headerBar/header-bar.service';
+import { UserService } from 'src/service/user/user.service';
+import { CreateApTokenResponse, LoginModel } from 'src/interface/IUser';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +13,7 @@ import { LanguageTranslateService } from 'src/service/languageTranslate/language
 })
 export class LoginComponent implements OnInit {
   public chooseSetting: boolean = false;
-  public loginModel: LoginModel = new LoginModel();
+  public loginModel!: LoginModel;
 
   public loginForm = this.formBuilder.group({
     account: new FormControl('test'),
@@ -26,12 +24,17 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private loginService: LoginService,
+    private userService: UserService,
     private languageTranslateService: LanguageTranslateService,
-    private messageService: MessageService
+    private router: Router,
+    private headerBarService: HeaderBarService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (sessionStorage.getItem('AP_Token') !== null) {
+      this.router.navigate(['manage', 'wellcome']);
+    }
+  }
 
   toggle() {
     this.chooseSetting = !this.chooseSetting;
@@ -41,27 +44,32 @@ export class LoginComponent implements OnInit {
     return this.chooseSetting ? 'hidden' : '';
   }
 
-  test() {
+  Login() {
     this.DataCovert();
-    let test$ = this.loginService.Login(
-      this.loginModel,
-      this.languageTranslateService.translate.currentLang
-    );
 
-    test$.subscribe((data: CreateApTokenResponse) => {
-      console.log(data);
-      if (data.result) {
-        localStorage.setItem('Account', this.loginModel.account);
-        localStorage.setItem('AP_Token', data.token.Access);
-        localStorage.setItem('AP_TokenExpire', data.token.AccessExpires);
-      }
-    });
+    this.userService
+      .Login(
+        this.loginModel,
+        this.languageTranslateService.translate.currentLang
+      )
+      .subscribe((data: CreateApTokenResponse) => {
+        console.log(data);
+        if (data.result) {
+          sessionStorage.setItem('Account', this.loginModel.account);
+          sessionStorage.setItem('AP_Token', data.token.Access);
+          sessionStorage.setItem('AP_TokenExpire', data.token.AccessExpires);
+          this.headerBarService.SetManageHeaderBarItems();
+          this.router.navigate(['manage']);
+        }
+      });
   }
 
   DataCovert() {
-    this.loginModel.account = this.loginForm.get('account')?.value;
-    this.loginModel.password = this.loginForm.get('password')?.value;
-    this.loginModel.corpNo = this.loginForm.get('corpNo')?.value;
-    this.loginModel.bizType = this.loginForm.get('bizType')?.value;
+    this.loginModel = new LoginModel(
+      this.loginForm.get('account')?.value,
+      this.loginForm.get('password')?.value,
+      this.loginForm.get('corpNo')?.value,
+      this.loginForm.get('bizType')?.value
+    )
   }
 }

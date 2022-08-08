@@ -1,0 +1,52 @@
+.header {
+  height: 8vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  overflow-y: overlay;
+  height: 86vh;
+}
+
+.content {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.container .content {
+  max-width: 100%;
+}
+
+.footer {
+  height: 6vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+::ng-deep .grid {
+  margin: 0;
+}
+
+.all {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+app-header {
+  width: 100%;
+}
+
+app-footer {
+  width: 100%;
+}
+
+app-content{
+  height: 100%;
+}

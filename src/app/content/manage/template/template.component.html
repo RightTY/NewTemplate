@@ -1,0 +1,147 @@
+<div class="flex">
+  <div class="templateClassificationList">
+    <!-- <button
+  type="button"
+  (click)="showDialog()"
+  pButton
+  icon="pi pi-external-link"
+  label="View"
+></button>
+<p-dialog
+  header="Flexible ScrollHeight"
+  [(visible)]="dialogVisible"
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  [maximizable]="true"
+  [modal]="true"
+  [resizable]="true"
+  [contentStyle]="{ height: '300px' }"
+  styleClass="p-fluid"
+>
+  <p-tree [value]="templateClassificationList" scrollHeight="flex"></p-tree>
+  <ng-template pTemplate="footer">
+    <button
+      type="button"
+      pButton
+      icon="pi pi-check"
+      (click)="dialogVisible = false"
+      label="Ok"
+      class="p-button-text"
+    ></button>
+  </ng-template>
+</p-dialog> -->
+
+    <p-tree
+      #pt
+      [value]="templateClassificationList"
+      [virtualScroll]="true"
+      [virtualNodeHeight]="'33'"
+      scrollHeight="75vh"
+      selectionMode="single"
+      (onNodeSelect)="this.GetTemplateClassificationInfo($event.node.data)"
+    ></p-tree>
+  </div>
+  <div class="card flex-wrap templateList">
+    <p-table
+      #dt
+      [value]="templateList"
+      [scrollable]="true"
+      scrollHeight="65vh"
+      [paginator]="true"
+      [rows]="10"
+      responsiveLayout="scroll"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [globalFilterFields]="[
+        'tempname',
+        'tempid',
+        'updateuser',
+        'updatetime',
+        'effectdate'
+      ]"
+    >
+      <ng-template pTemplate="caption">
+        <div class="table-header align-items-center">
+          List of Customers
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="applyFilterGlobal($event, 'contains')"
+              placeholder="Search..."
+            />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pResizableColumn style="justify-content: center; flex-basis: 5%">
+            {{ "moving" | translate }}
+          </th>
+          <th pResizableColumn style="flex-basis: 13%">
+            {{ "operating" | translate }}
+          </th>
+          <th pResizableColumn style="flex-basis: 16%">
+            {{ "templateTitle" | translate }}
+          </th>
+          <th pResizableColumn style="flex-basis: 16%">
+            {{ "templateId" | translate }}
+          </th>
+          <th pResizableColumn style="justify-content: center; flex-basis: 8%">
+            {{ "version" | translate }}
+          </th>
+          <th pResizableColumn style="flex-basis: 10%">
+            {{ "editor" | translate }}
+          </th>
+          <th pResizableColumn style="flex-basis: 16%">
+            {{ "editDT" | translate }}
+          </th>
+          <th pResizableColumn style="flex-basis: 16%">
+            {{ "effectDate" | translate }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-template>
+        <tr>
+          <td style="justify-content: center; flex-basis: 5%">
+            <p-tableCheckbox [value]="this.template"></p-tableCheckbox>
+          </td>
+          <td style="flex-basis: 13%">
+            <button
+              pButton
+              type="button"
+              [label]="'edit' | translate"
+              class="p-button-link after"
+            ></button>
+            <p-splitButton
+              #ap
+              [label]="'more' | translate"
+              [model]="TemplateExtra"
+              (onClick)="ap.onDropdownButtonClick($event)"
+              styleClass="p-button-text p-button-link"
+            ></p-splitButton>
+          </td>
+          <td style="flex-basis: 16%">{{ template.tempname }}</td>
+          <td style="flex-basis: 16%">{{ template.tempid }}</td>
+          <td style="justify-content: center; flex-basis: 8%">
+            {{ template.tempver }}
+          </td>
+          <td style="flex-basis: 10%">{{ template.updateuser }}</td>
+          <td style="flex-basis: 16%">
+            {{ template.updatetime | date: "yyyy/MM/dd HH:mm:ss" }}
+          </td>
+          <td style="flex-basis: 16%">
+            {{ template.effectdate | date: "yyyy/MM/dd HH:mm:ss" }}
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td style="justify-content: center">No records found</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

@@ -24,7 +24,7 @@ import { PanelModule } from 'primeng/panel';
     FormsModule,
     PanelModule,
     ButtonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   exports:[
     HeaderComponent

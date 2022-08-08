@@ -1,62 +1,62 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { MenuItem, TreeNode } from 'primeng/api';
+import { Router } from '@angular/router';
 import { MenuItemModel } from 'src/model/MenuItemModel';
 import { TreeNodeModel } from 'src/model/TreeNodeModel';
+import { HeaderBarService } from 'src/service/headerBar/header-bar.service';
 import { LanguageTranslateService } from 'src/service/languageTranslate/language-translate.service';
-
 
 @Component({
   selector: 'app-header',
-  providers:[],
+  providers: [],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  public headerBarItems: MenuItemModel[] = [];
+  public languageTranslateItems: TreeNodeModel[] = [];
 
-  public headerBarItems: MenuItem[] = [];
-  public languageTranslateItems: TreeNode[]= [];
-  public LangList:string[];
+  public chooseLang: TreeNodeModel| undefined;
+  constructor(
+    private languageTranslateService: LanguageTranslateService,
+    private headerBarService: HeaderBarService,
+    private router: Router
+  ) {}
 
-  public chooseLang:any;
-  private translate:TranslateService;
-  constructor(languageTranslateService:LanguageTranslateService) {
-    this.translate = languageTranslateService.translate;
-    this.LangList = languageTranslateService.LangList;
-  }
-
-  
   ngOnInit(): void {
+    this.Subscription();
 
-    this.ChangeHeaderBarItems();
+    //預設headerBarItems資料
+    if (sessionStorage.getItem('AP_Token') === null) {
+      this.headerBarService.SetHeaderBarItems();
+    }
 
-    console.log(this.LangList);
     let languageTranslateItems = this.languageTranslateItems;
-    let translate = this.translate;
+    let translate = this.languageTranslateService.translate;
 
-    this.LangList.forEach(function(value)
-    {  
+    this.languageTranslateService.LangList.forEach(function (value) {
       languageTranslateItems.push(
-       new TreeNodeModel(translate.instant(value),value)
+        new TreeNodeModel(translate.instant(value), value)
       );
     });
 
-    this.chooseLang = languageTranslateItems.filter(function(value){
-      return value.data===translate.currentLang;
-    });
+    this.chooseLang = languageTranslateItems.filter(function (value) {
+      return value.data === translate.currentLang;
+    })[0];
   }
 
-  ChangeLang(chooseLang:TreeNodeModel){
-    this.translate.use(chooseLang.data).subscribe(()=>{
-      this.ChangeHeaderBarItems();
-    });
+  ChangeLang(chooseLang: TreeNodeModel) {
+    this.languageTranslateService.setLang(chooseLang.data);
   }
 
-  ChangeHeaderBarItems(){
-    this.headerBarItems = [];
-    this.headerBarItems.push(
-      new MenuItemModel(this.translate.instant('enterpriseRegister')),
-      new MenuItemModel(this.translate.instant('userRegister'))
-    );
+  Subscription() {
+    //訂閱headerBarItems資料
+    this.headerBarService.headerBarItems$.subscribe((headerBarItems) => {
+      if (this.router.url.match('/manage')) {
+      } else this.headerBarItems = headerBarItems;
+    });
+    //訂閱語系更改
+    this.languageTranslateService.currtentLang$.subscribe(() => {
+      this.headerBarService.SetHeaderBarItems();
+    });
   }
 }

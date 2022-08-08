@@ -1,0 +1,48 @@
+.templateList {
+  width: 75%;
+}
+
+.templateClassificationList {
+  width: 25%;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+:host ::ng-deep .p-splitbutton:hover {
+  .p-button-label {
+    text-decoration: underline;
+  }
+}
+
+:host ::ng-deep .p-splitbutton.p-button-text > .p-button:enabled:hover,
+.p-splitbutton.p-button-text
+  > .p-button:not(button):not(a):not(.p-disabled):hover {
+  background-color: inherit;
+}
+
+:host ::ng-deep .p-button {
+  padding: 0.5rem 0;
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+:host ::ng-deep .p-button.p-button-link {
+  color: #3b82f6;
+  &:focus{
+    color: #3b82f6;
+    box-shadow: none;
+  }
+}
+
+.after::after{
+    content: "";
+    width: 1px;
+    height: 14px;
+    margin: 0px 8px;
+    top:11px;
+    background-color: rgba(0, 0, 0, 0.2);
+}

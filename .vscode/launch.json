@@ -3,11 +3,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "vscode-edge-devtools.debug",
+      "name": "Edge",
+      "type": "pwa-msedge",
       "request": "launch",
-      "name": "Launch Microsoft Edge and open the Edge DevTools",
-      "url": "http://localhost:4200",
-      "webRoot": "${workspaceFolder}"
+      "url": "http://localhost:4200/#",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "trace": true,
+      "userDataDir": "${workspaceRoot}/.vscode/edge"
     },
     {
       "name": "ng test",

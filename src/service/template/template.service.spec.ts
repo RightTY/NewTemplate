@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DefaultService } from './default.service';
+import { TemplateService } from './template.service';
 
-describe('DefaultService', () => {
-  let service: DefaultService;
+describe('TemplateService', () => {
+  let service: TemplateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DefaultService);
+    service = TestBed.inject(TemplateService);
   });
 
   it('should be created', () => {
